@@ -46,10 +46,6 @@ class ExtractorUrl:
 
     return value
 
-  def print_converted_currency(self, qty):
-    dollar_value = 5.56
-    return dollar_value * int(qty)
-
   def __len__(self):
     return len(self.url)
 
@@ -69,9 +65,22 @@ print("O tamanho da url é: ", len(extractor_url))
 print(extractor_url)
 print(extractor_url == extractor_url2)
 
+VALUE_DOLLAR = 5.50
 origin_currency = extractor_url.get_value_parameter("moedaOrigem")
 target_currency = extractor_url.get_value_parameter("moedaDestino")
 qty = extractor_url.get_value_parameter("quantidade")
 
+print("*********************************************")
+print("**************CONVERSOR DE MOEDA*************\n")
 if origin_currency == "real" and target_currency == "dolar":
-  print("O valor convertido de dolar para real é: ", extractor_url.print_converted_currency(qty))
+  converted_value = int(qty) / VALUE_DOLLAR
+  print("O valor de R$ {} reais é igual a $ {} doláres.".format(qty, converted_value))
+elif origin_currency == "dolar" and target_currency == "real":
+  converted_value = int(qty) * VALUE_DOLLAR
+  print("O valor de $ {} doláres é igual a R$ {} reais.".format(qty, converted_value))
+else:
+  converted_value = int(qty) * VALUE_DOLLAR
+  print(f"Câmbio de {origin_currency} para {target_currency} não está disponível.")
+
+print("\n*********************END*********************")
+print("*********************************************")
